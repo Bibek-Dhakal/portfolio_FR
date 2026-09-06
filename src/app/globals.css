@@ -1,27 +1,57 @@
 @import "tailwindcss";
 
 :root {
-  --color-main: #2c3e50;
-  --color-ink: #1a1a1a;
-  --color-paper: #fafafa;
-  --color-accent: #922b21;
+  --color-bg: #09090b;
+  --color-surface: #18181b;
+  --color-border: #27272a;
+  --color-text-main: #fafafa;
+  --color-text-muted: #a1a1aa;
+  --color-accent: #10b981;
+  --color-accent-dim: rgba(16, 185, 129, 0.2);
 }
 
 @theme inline {
-  --color-main: var(--color-main);
-  --color-ink: var(--color-ink);
-  --color-paper: var(--color-paper);
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-border: var(--color-border);
+  --color-text-main: var(--color-text-main);
+  --color-text-muted: var(--color-text-muted);
   --color-accent: var(--color-accent);
+  --color-accent-dim: var(--color-accent-dim);
   --font-heading: var(--font-plex-sans);
   --font-body: var(--font-plex-serif);
 }
 
 body {
-  background: var(--color-paper);
-  color: var(--color-ink);
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  background-image: 
+    linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
 ::selection {
-  background: var(--color-main);
-  color: var(--color-paper);
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.text-glow {
+  text-shadow: 0 0 20px var(--color-accent-dim);
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  opacity: 0;
+  animation: fade-in-up 0.6s ease-out forwards;
 }
