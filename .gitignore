@@ -51,3 +51,8 @@ next-env.d.ts
 PATCH.md
 tsc.log
 
+# lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
