@@ -1,7 +1,7 @@
 import type {Metadata} from "next";
 import Image from "next/image";
 import {caseStudies, links} from "@/lib/site-config";
-import {AlertTriangle, Beaker, CheckCircle2, ChevronRight, Code2, XCircle} from "lucide-react";
+import {AlertTriangle, Beaker, CheckCircle2, ChevronRight, Code2, FileText, XCircle} from "lucide-react";
 import {Github} from "@/components/icons";
 
 export const metadata: Metadata = {
@@ -87,6 +87,32 @@ export default function WorkPage() {
                                             </p>
                                         </div>
                                     )}
+
+                                    {/* Project Artifact Links */}
+                                    {(study.paperUrl || study.repoUrl) && (
+                                        <div className="flex flex-wrap gap-4 pt-4">
+                                            {study.paperUrl && (
+                                                <a
+                                                    href={study.paperUrl}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    className="flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 font-heading text-sm font-semibold text-bg transition-all hover:bg-accent/90"
+                                                >
+                                                    <FileText size={16}/> Read Research Paper
+                                                </a>
+                                            )}
+                                            {study.repoUrl && (
+                                                <a
+                                                    href={study.repoUrl}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    className="flex items-center gap-2 rounded-lg border border-border bg-bg px-5 py-2.5 font-heading text-sm font-medium text-text-main transition-colors hover:border-accent hover:text-accent"
+                                                >
+                                                    <Github size={16}/> View Codebase
+                                                </a>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div className="md:col-span-5 space-y-8">
@@ -109,7 +135,7 @@ export default function WorkPage() {
                                     )}
 
                                     {study.tradeoff && (
-                                        <div className="rounded-xl border border-accent/20 bg-accent/5 p-5">
+                                        <div className="rounded-xl border border-accent/30 bg-accent/10 p-5">
                                             <h3 className="flex items-center gap-2 font-heading text-sm font-semibold uppercase tracking-wider text-accent">
                                                 <XCircle size={14}/>
                                                 {study.tradeoff.label}

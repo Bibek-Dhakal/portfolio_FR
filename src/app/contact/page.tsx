@@ -2,6 +2,7 @@ import type {Metadata} from "next";
 import {contactCopy, links, mailto} from "@/lib/site-config";
 import {ArrowUpRight, Calendar, FileText, Mail} from "lucide-react";
 import {Linkedin} from "@/components/icons";
+import {ContactForm} from "@/components/contact-form";
 
 export const metadata: Metadata = {
     title: "Contact — Bibek Dhakal",
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 
 const actions = [
     {
-        label: "Email me",
+        label: "Email me directly",
         detail: links.email,
         href: mailto,
         icon: Mail,
@@ -39,7 +40,7 @@ const actions = [
 
 export default function ContactPage() {
     return (
-        <div className="mx-auto max-w-4xl px-6 py-20 animate-fade-in-up">
+        <div className="mx-auto max-w-5xl px-6 py-20 animate-fade-in-up">
             <div className="mb-16 text-center">
                 <h1 className="font-heading text-3xl font-bold tracking-tight text-text-main sm:text-4xl">
                     {contactCopy.heading}
@@ -49,36 +50,44 @@ export default function ContactPage() {
                 </p>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-                {actions.map((action) => {
-                    const Icon = action.icon;
-                    return (
-                        <a
-                            key={action.label}
-                            href={action.href}
-                            target={action.external ? "_blank" : undefined}
-                            rel={action.external ? "noreferrer" : undefined}
-                            className="group relative flex items-start gap-5 rounded-2xl border border-border bg-surface/30 p-6 transition-all hover:-translate-y-1 hover:border-accent hover:bg-surface/60 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
-                        >
-                            <div
-                                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-border bg-bg text-text-main transition-colors group-hover:border-accent/50 group-hover:text-accent">
-                                <Icon size={20}/>
-                            </div>
-                            <div className="flex-1">
-                                <h2 className="font-heading text-lg font-semibold text-text-main transition-colors group-hover:text-accent">
-                                    {action.label}
-                                </h2>
-                                <p className="mt-1 font-body text-sm text-text-muted">
-                                    {action.detail}
-                                </p>
-                            </div>
-                            <ArrowUpRight
-                                size={20}
-                                className="absolute right-6 top-6 text-border transition-colors group-hover:text-accent"
-                            />
-                        </a>
-                    );
-                })}
+            <div className="grid gap-10 md:grid-cols-2 lg:gap-16">
+                {/* Contact Form Section */}
+                <div className="order-2 md:order-1">
+                    <ContactForm/>
+                </div>
+
+                {/* Direct Links Section */}
+                <div className="order-1 flex flex-col gap-4 md:order-2">
+                    {actions.map((action) => {
+                        const Icon = action.icon;
+                        return (
+                            <a
+                                key={action.label}
+                                href={action.href}
+                                target={action.external ? "_blank" : undefined}
+                                rel={action.external ? "noreferrer" : undefined}
+                                className="group relative flex items-start gap-5 rounded-2xl border border-border bg-surface/30 p-6 transition-all hover:-translate-y-1 hover:border-accent hover:bg-surface/60 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
+                            >
+                                <div
+                                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-border bg-bg text-text-main transition-colors group-hover:border-accent/50 group-hover:text-accent">
+                                    <Icon size={20}/>
+                                </div>
+                                <div className="flex-1">
+                                    <h2 className="font-heading text-lg font-semibold text-text-main transition-colors group-hover:text-accent">
+                                        {action.label}
+                                    </h2>
+                                    <p className="mt-1 font-body text-sm text-text-muted">
+                                        {action.detail}
+                                    </p>
+                                </div>
+                                <ArrowUpRight
+                                    size={20}
+                                    className="absolute right-6 top-6 text-border transition-colors group-hover:text-accent"
+                                />
+                            </a>
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );

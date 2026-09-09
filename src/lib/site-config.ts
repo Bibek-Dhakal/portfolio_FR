@@ -77,6 +77,7 @@ export type CaseStudy = {
     nextTime: string;
     image?: { src: string; alt: string; caption: string };
     repoUrl?: string;
+    paperUrl?: string;
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -102,20 +103,12 @@ export const caseStudies: CaseStudy[] = [
             caption:
                 "Five experiment configurations, evaluated on held-out data. The baseline hand rule beats every tree variant.",
         },
-    },
-    {
-        slug: "second-case-study",
-        title: "Second case study",
-        status: "in-progress",
-        problem:
-            "A second, independent proof of the same rigor — different problem, same baseline-first standard.",
-        approach: "",
-        result: "",
-        nextTime: "",
-    },
+        repoUrl: "https://github.com/Bibek-Dhakal/applied-search-intelligence/",
+        paperUrl: "https://bibek-dhakal.github.io/applied-search-intelligence/"
+    }
 ];
 
 export const contactCopy = {
     heading: "Get in touch",
-    body: "The fastest way to reach me is email. If you'd rather talk first, book time directly.",
+    body: "The fastest way to reach me is using the form below. If you'd rather talk first, feel free to book a time.",
 };
