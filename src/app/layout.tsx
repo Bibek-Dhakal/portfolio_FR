@@ -30,7 +30,7 @@ export const metadata: Metadata = {
         siteName: site.name,
         images: [
             {
-                url: '/images/hero-texture.png',
+                url: '/images/social-preview.jpeg',
                 width: 1200,
                 height: 630,
                 alt: `${site.name} Portfolio`,
