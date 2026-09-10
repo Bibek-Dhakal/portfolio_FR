@@ -5,6 +5,7 @@ import "./globals.css";
 import {links, mailto, nav, site} from "@/lib/site-config";
 import {FileText, Mail} from "lucide-react";
 import {Github, Linkedin} from "@/components/icons";
+import React from "react";
 
 const plexSans = IBM_Plex_Sans({
     subsets: ["latin"],
@@ -19,7 +20,7 @@ const plexSerif = IBM_Plex_Serif({
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL('https://bibek-dhakal-fr.vercel.app'),
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
     title: `${site.name} — ${site.role}`,
     description: site.claim,
     openGraph: {
@@ -42,7 +43,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: `${site.name} — ${site.role}`,
         description: site.claim,
-        images: ['/images/hero-texture.png'],
+        images: ['/images/social-preview.jpeg'],
     },
 };
 
