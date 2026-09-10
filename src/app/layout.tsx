@@ -19,8 +19,31 @@ const plexSerif = IBM_Plex_Serif({
 });
 
 export const metadata: Metadata = {
+    metadataBase: new URL('https://bibek-dhakal-fr.vercel.app'),
     title: `${site.name} — ${site.role}`,
     description: site.claim,
+    openGraph: {
+        title: `${site.name} — ${site.role}`,
+        description: site.claim,
+        url: '/',
+        siteName: site.name,
+        images: [
+            {
+                url: '/images/hero-texture.png',
+                width: 1200,
+                height: 630,
+                alt: `${site.name} Portfolio`,
+            },
+        ],
+        locale: 'en_US',
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: `${site.name} — ${site.role}`,
+        description: site.claim,
+        images: ['/images/hero-texture.png'],
+    },
 };
 
 export default function RootLayout({children}: { children: React.ReactNode }) {
@@ -81,30 +104,41 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
 
         <footer className="border-t border-border bg-surface/30">
             <div
-                className="mx-auto flex max-w-4xl flex-col gap-6 px-6 py-10 sm:flex-row sm:items-center sm:justify-between">
+                className="mx-auto flex max-w-4xl flex-col gap-8 px-6 py-10 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                     <p className="font-heading text-base font-semibold text-text-main">{site.name}</p>
                     <p className="mt-1 font-body text-sm text-text-muted">{site.role}</p>
                     <p className="mt-4 font-mono text-xs text-text-muted/60">
                         &copy; {new Date().getFullYear()} All rights reserved.
                     </p>
+                    {/*<div className="mt-6">*/}
+                    {/*    <a href="https://flyrank.ai/verify/bibek-dhakal" target="_blank" rel="noopener noreferrer"*/}
+                    {/*       className="inline-block transition-transform hover:scale-105"*/}
+                    {/*       aria-label="FlyRank AI Fluency Graduate">*/}
+                    {/*        <img src="https://internship-badge.netlify.app/badge-ai-fluency.svg"*/}
+                    {/*             alt="FlyRank AI Fluency Graduate"*/}
+                    {/*             className="h-10 opacity-90 hover:opacity-100 transition-opacity"/>*/}
+                    {/*    </a>*/}
+                    {/*</div>*/}
                 </div>
                 <div className="flex gap-4">
-                    <a href={links.linkedin} target="_blank" rel="noreferrer"
+                    <a href={links.linkedin} target="_blank" rel="noopener noreferrer"
                        className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface text-text-muted transition-colors hover:border-accent hover:text-accent"
                        aria-label="LinkedIn">
                         <Linkedin size={18}/>
                     </a>
-                    <a href={links.github} target="_blank" rel="noreferrer"
+                    <a href={links.github} target="_blank" rel="noopener noreferrer"
                        className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface text-text-muted transition-colors hover:border-accent hover:text-accent"
                        aria-label="GitHub">
                         <Github size={18}/>
                     </a>
-                    <a href={links.cv} target="_blank" rel="noreferrer"
-                       className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface text-text-muted transition-colors hover:border-accent hover:text-accent"
-                       aria-label="CV">
-                        <FileText size={18}/>
-                    </a>
+                    {links.cv && links.cv !== "#" && (
+                        <a href={links.cv} target={links.cv === "#" ? "_self" : "_blank"} rel="noopener noreferrer"
+                           className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface text-text-muted transition-colors hover:border-accent hover:text-accent"
+                           aria-label="CV">
+                            <FileText size={18}/>
+                        </a>
+                    )}
                     <a href={mailto}
                        className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface text-text-muted transition-colors hover:border-accent hover:text-accent"
                        aria-label="Email">

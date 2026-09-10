@@ -3,6 +3,7 @@ import {contactCopy, links, mailto} from "@/lib/site-config";
 import {ArrowUpRight, Calendar, FileText, Mail} from "lucide-react";
 import {Linkedin} from "@/components/icons";
 import {ContactForm} from "@/components/contact-form";
+import Link from "next/link";
 
 export const metadata: Metadata = {
     title: "Contact — Bibek Dhakal",
@@ -13,6 +14,7 @@ const actions = [
         label: "Email me directly",
         detail: links.email,
         href: mailto,
+        external: true,
         icon: Mail,
     },
     {
@@ -31,9 +33,9 @@ const actions = [
     },
     {
         label: "CV",
-        detail: "Download the full resume",
+        detail: "View the full resume",
         href: links.cv,
-        external: true,
+        external: links.cv !== "#",
         icon: FileText,
     },
 ];
@@ -60,12 +62,13 @@ export default function ContactPage() {
                 <div className="order-1 flex flex-col gap-4 md:order-2">
                     {actions.map((action) => {
                         const Icon = action.icon;
+
                         return (
-                            <a
+                            <Link
                                 key={action.label}
                                 href={action.href}
                                 target={action.external ? "_blank" : undefined}
-                                rel={action.external ? "noreferrer" : undefined}
+                                rel={action.external ? "noopener noreferrer" : undefined}
                                 className="group relative flex items-start gap-5 rounded-2xl border border-border bg-surface/30 p-6 transition-all hover:-translate-y-1 hover:border-accent hover:bg-surface/60 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
                             >
                                 <div
@@ -79,12 +82,17 @@ export default function ContactPage() {
                                     <p className="mt-1 font-body text-sm text-text-muted">
                                         {action.detail}
                                     </p>
+                                    {!action.external && (
+                                        <p className="mt-1 font-body text-sm text-accent">
+                                            Coming soon!
+                                        </p>
+                                    )}
                                 </div>
                                 <ArrowUpRight
                                     size={20}
                                     className="absolute right-6 top-6 text-border transition-colors group-hover:text-accent"
                                 />
-                            </a>
+                            </Link>
                         );
                     })}
                 </div>

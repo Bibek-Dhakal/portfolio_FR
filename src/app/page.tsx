@@ -60,7 +60,7 @@ export default function Home() {
                         <a
                             href={links.github}
                             target="_blank"
-                            rel="noreferrer"
+                            rel="noopener noreferrer"
                             className="flex items-center gap-2 rounded-lg border border-border bg-surface/50 px-6 py-3 font-heading text-sm font-medium text-text-main transition-colors hover:border-accent hover:bg-surface backdrop-blur-sm"
                         >
                             <Github size={16}/>
