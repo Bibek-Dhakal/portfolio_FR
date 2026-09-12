@@ -6,6 +6,8 @@ import {links, mailto, nav, site} from "@/lib/site-config";
 import {FileText, Mail} from "lucide-react";
 import {Github, Linkedin} from "@/components/icons";
 import React from "react";
+import FrVerification from "@/components/fr-verification"
+import {Analytics} from "@vercel/analytics/next"
 
 const plexSans = IBM_Plex_Sans({
     subsets: ["latin"],
@@ -101,7 +103,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
             </div>
         </header>
 
-        <main className="flex-1">{children}</main>
+        <main className="flex-1">{children}<Analytics/></main>
 
         <footer className="border-t border-border bg-surface/30">
             <div
@@ -112,15 +114,9 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
                     <p className="mt-4 font-mono text-xs text-text-muted/60">
                         &copy; {new Date().getFullYear()} All rights reserved.
                     </p>
-                    {/*<div className="mt-6">*/}
-                    {/*    <a href="https://flyrank.ai/verify/bibek-dhakal" target="_blank" rel="noopener noreferrer"*/}
-                    {/*       className="inline-block transition-transform hover:scale-105"*/}
-                    {/*       aria-label="FlyRank AI Fluency Graduate">*/}
-                    {/*        <img src="https://internship-badge.netlify.app/badge-ai-fluency.svg"*/}
-                    {/*             alt="FlyRank AI Fluency Graduate"*/}
-                    {/*             className="h-10 opacity-90 hover:opacity-100 transition-opacity"/>*/}
-                    {/*    </a>*/}
-                    {/*</div>*/}
+                    <div className="mt-6">
+                        <FrVerification/>
+                    </div>
                 </div>
                 <div className="flex gap-4">
                     <a href={links.linkedin} target="_blank" rel="noopener noreferrer"
