@@ -86,26 +86,50 @@ export const caseStudies: CaseStudy[] = [
         title: "FlyRank CTR Opportunity Scoring",
         status: "live",
         problem:
-            "Human review teams couldn't manually sift through 70 million rows of search data to find which pages needed metadata fixes. A flat if/then rule looked tempting, but CTR varies non-linearly by content type and competition level even at the same ranking position.",
+            "SEO reviewers have limited capacity and can't manually sift through ~79 million rows of search performance data to find metadata opportunities. A simple rule is too rigid because CTR collapses non-linearly across different ranking tiers and content types.",
         approach:
-            "I framed it as decision support, not full automation: a proxy label for pages significantly below the historical CTR median for their position tier and content type, filtered to a minimum of 100 impressions to cut low-volume noise. I chose decision trees because reviewers needed interpretable reason codes, not a black box, and tested tree depth against a hand-written baseline rule under a strict train/test split.",
+            "I queried a 79M-row production warehouse using DuckDB to handle out-of-core data, then trained a Random Forest on a curated 30k-row slice. I framed this as a decision-support ranking task: identifying pages underperforming their exact peer group's median CTR, and mapping the model's probability scores into a reason-coded 'Action Playbook' for human reviewers.",
         result:
-            "The baseline rule won. It held Precision@20 of 0.750 and Precision@50 of 0.660 on unseen data, beating every tree configuration I tried. A depth-3 tree with an added \"smarter\" feature tied the baseline at 0.660 but lost the human-readable reason codes for no gain — so it doesn't count as a win.",
+            "The model caught a massive data leakage trap. A naive random split initially yielded an inflated 94% Precision@50 because 87% of clients overlapped between train and test sets. By implementing a strict client-grouped holdout split, I uncovered the honest precision of 0.640. This true signal still vastly outperformed the hand-written baseline rule (0.260) and random chance (0.286).",
         tradeoff: {
-            label: "The result I didn't expect",
-            body: "The depth-3 tree — deeper, with an extra feature — performed the worst of every configuration tested on unseen data. More complexity was pure overfitting here, not signal. The simple baseline stayed the reigning champion.",
+            label: "The illusion of 94% accuracy",
+            body: "It was tempting to look at a 94% metric and celebrate. Realizing the model was just memorizing client baselines instead of generalizable SEO patterns—and actively tearing my own result down to a 64% honest score—was the most valuable engineering lesson of the project.",
         },
         nextTime:
-            "Shift earlier to time-series momentum features — a page's week-over-week CTR velocity is a stronger signal than a flat 90-day average — and build time-aware validation splits from the start to rule out future leakage entirely.",
+            "The model still struggles with thin-volume noise (pages near the 100-impression floor). Next time, I would introduce a dynamic impression threshold that scales based on the volatility of the specific position tier to filter out small-sample false positives.",
         image: {
-            src: "/images/ml-eval-output.jpeg",
-            alt: "Terminal output comparing Precision@20 and Precision@50 across five experiment configurations, hand rule vs. decision tree",
+            src: "/images/others/capstone_feature_importance.png",
+            alt: "Bar chart showing Random Forest Feature Importances, led by impressions_90d and engagement_rate",
             caption:
-                "Five experiment configurations, evaluated on held-out data. The baseline hand rule beats every tree variant.",
+                "Feature importances from the un-leaked Random Forest. The spread is believable, confirming no single 'leaky' feature is dominating the decision.",
         },
         repoUrl: "https://github.com/Bibek-Dhakal/applied-search-intelligence/",
         paperUrl: "https://bibek-dhakal.github.io/applied-search-intelligence/"
-    }
+    },
+    {
+        slug: "customer-churn-risk-intelligence",
+        title: "Customer Churn Risk Intelligence",
+        status: "live",
+        problem:
+            "Customer churn severely impacts recurring revenue, but a model that simply guesses 'Will this customer leave?' isn't enough. Marketing teams need to know how likely a customer is to leave and how to prioritize retention budgets effectively, rather than relying on raw binary flags.",
+        approach:
+            "I built an end-to-end ML pipeline focused on probability ranking rather than pure classification. After engineering features for financial exposure and service adoption, I evaluated a linear baseline (Logistic Regression) against tree ensembles (Random Forest, LightGBM) using 5-fold stratified cross-validation to manage the 26.5% class imbalance.",
+        result:
+            "Logistic Regression won. It achieved a Mean CV ROC-AUC of 0.8501 and an Average Precision of 0.6718. Instead of outputting raw probabilities, I translated the predictions into four actionable risk tiers (Low to Very High), allowing the business to allocate intervention budgets strategically based on retention capacity.",
+        tradeoff: {
+            label: "Linear simplicity vs. non-linear accuracy",
+            body: "Tree-based models (LightGBM, Random Forest) yielded slightly higher raw accuracy at a default 0.5 threshold, but Logistic Regression provided superior ranking sensitivity across varying risk thresholds. For risk stratification, ranking calibration beats raw binary accuracy.",
+        },
+        nextTime:
+            "Tune the decision threshold down to ~0.35 to prioritize Recall and catch more at-risk users earlier. I also plan to extract the Logistic Regression odds ratios to give support agents explainable reason codes for why a user was flagged.",
+        image: {
+            src: "/images/others/churn-model-comparison.png",
+            alt: "Bar chart comparing Cross-Validated ROC-AUC across Logistic Regression, Random Forest, and LightGBM",
+            caption:
+                "Cross-Validated ROC-AUC by Model. The linear baseline outperformed the tree ensembles for probability-based risk ranking.",
+        },
+        repoUrl: "https://github.com/Bibek-Dhakal/customer-churn-risk-intelligence",
+    },
 ];
 
 export const contactCopy = {
