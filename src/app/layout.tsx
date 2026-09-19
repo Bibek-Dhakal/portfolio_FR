@@ -6,8 +6,8 @@ import {links, mailto, nav, site} from "@/lib/site-config";
 import {FileText, Mail} from "lucide-react";
 import {Github, Linkedin} from "@/components/icons";
 import React from "react";
-import FrVerification from "@/components/fr-verification"
-import {Analytics} from "@vercel/analytics/next"
+import FrVerification from "@/components/fr-verification";
+import {Analytics} from "@vercel/analytics/next";
 
 const plexSans = IBM_Plex_Sans({
     subsets: ["latin"],
@@ -21,32 +21,60 @@ const plexSerif = IBM_Plex_Serif({
     variable: "--font-plex-serif",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 export const metadata: Metadata = {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+    metadataBase: new URL(siteUrl),
     title: `${site.name} — ${site.role}`,
-    description: site.claim,
+    description: `${site.claim} ${site.availability}. Based in ${site.location}.`,
+    keywords: [
+        "Bibek Dhakal",
+        "Associate ML Engineer",
+        "Junior ML Engineer",
+        "AI Engineer",
+        "PyTorch",
+        "FastAPI",
+        "MLOps",
+        "Nepal",
+    ],
+    authors: [{name: site.name}],
     openGraph: {
         title: `${site.name} — ${site.role}`,
         description: site.claim,
-        url: '/',
+        url: "/",
         siteName: site.name,
         images: [
             {
-                url: '/images/social-preview.jpeg',
+                url: "/images/social-preview.jpeg",
                 width: 1200,
                 height: 630,
                 alt: `${site.name} Portfolio`,
             },
         ],
-        locale: 'en_US',
-        type: 'website',
+        locale: "en_US",
+        type: "website",
     },
     twitter: {
-        card: 'summary_large_image',
+        card: "summary_large_image",
         title: `${site.name} — ${site.role}`,
         description: site.claim,
-        images: ['/images/social-preview.jpeg'],
+        images: ["/images/social-preview.jpeg"],
     },
+};
+
+const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: site.name,
+    jobTitle: site.role,
+    email: links.email,
+    url: siteUrl,
+    address: {
+        "@type": "PostalAddress",
+        addressLocality: "Kathmandu",
+        addressCountry: "NP",
+    },
+    sameAs: [links.linkedin, links.github],
 };
 
 export default function RootLayout({children}: { children: React.ReactNode }) {
@@ -55,6 +83,10 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
               data-scroll-behavior="smooth">
         <body
             className="min-h-full flex flex-col font-body bg-bg text-text-main antialiased selection:bg-accent selection:text-bg">
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{__html: JSON.stringify(personJsonLd)}}
+        />
         <header className="sticky top-0 z-50 border-b border-border bg-bg/80 backdrop-blur-xl">
             <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
                 <Link href="/" className="group flex items-center gap-3" aria-label="Home">
@@ -72,12 +104,12 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
                         </text>
                     </svg>
                     <span
-                        className="hidden font-heading text-[15px] font-bold tracking-widest text-text-main transition-colors group-hover:text-accent sm:block">
+                        className="hidden font-heading text-[15px] font-bold tracking-widest text-text-main transition-colors group-hover:text-accent lg:block">
                 BIBEK DHAKAL
               </span>
                 </Link>
 
-                <nav className="hidden sm:flex gap-8 font-heading text-sm font-medium">
+                <nav className="hidden gap-8 font-heading text-sm font-medium sm:flex">
                     {nav.map((item) => (
                         <Link
                             key={item.href}
@@ -89,12 +121,12 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
                     ))}
                 </nav>
 
-                <nav className="flex sm:hidden gap-4 font-heading text-sm font-medium">
+                <nav className="flex gap-3 font-heading text-xs font-medium sm:hidden">
                     {nav.map((item) => (
                         <Link
                             key={item.href}
                             href={item.href}
-                            className="text-text-muted transition-colors hover:text-accent py-2 px-1"
+                            className="px-1 py-2 text-text-muted transition-colors hover:text-accent"
                         >
                             {item.label}
                         </Link>
@@ -111,6 +143,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
                 <div>
                     <p className="font-heading text-base font-semibold text-text-main">{site.name}</p>
                     <p className="mt-1 font-body text-sm text-text-muted">{site.role}</p>
+                    <p className="mt-1 font-body text-sm text-text-muted">{site.location}</p>
                     <p className="mt-4 font-mono text-xs text-text-muted/60">
                         &copy; {new Date().getFullYear()} All rights reserved.
                     </p>
@@ -130,7 +163,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
                         <Github size={18}/>
                     </a>
                     {links.cv && links.cv !== "#" && (
-                        <a href={links.cv} target={links.cv === "#" ? "_self" : "_blank"} rel="noopener noreferrer"
+                        <a href={links.cv} target="_blank" rel="noopener noreferrer"
                            className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface text-text-muted transition-colors hover:border-accent hover:text-accent"
                            aria-label="CV">
                             <FileText size={18}/>

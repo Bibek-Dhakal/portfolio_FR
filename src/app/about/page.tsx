@@ -1,10 +1,13 @@
 import type {Metadata} from "next";
 import Image from "next/image";
-import {about} from "@/lib/site-config";
-import {Box, Check, Terminal} from "lucide-react";
+import Link from "next/link";
+import {about, lookingFor, pillars} from "@/lib/site-config";
+import {Box, ExternalLink, Layers, Terminal} from "lucide-react";
 
 export const metadata: Metadata = {
     title: "About — Bibek Dhakal",
+    description:
+        "Entry-level AI / ML engineer with a software engineering background: evaluation-first modelling, ML services, LLM fundamentals.",
 };
 
 export default function AboutPage() {
@@ -17,11 +20,14 @@ export default function AboutPage() {
                         About Me
                     </h1>
                     <p className="mt-4 max-w-xl font-body text-lg leading-relaxed text-text-muted">
+                        {about.intro}
+                    </p>
+                    <p className="mt-4 max-w-xl font-body text-base leading-relaxed text-text-muted">
                         {about.credentials.scope}
                     </p>
                     <div
                         className="mt-6 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 font-heading text-sm font-semibold text-text-main">
-                        <span className="h-2 w-2 rounded-full bg-accent animate-pulse"/>
+                        <span className="h-2 w-2 animate-pulse rounded-full bg-accent"/>
                         {about.credentials.title}
                     </div>
                 </div>
@@ -40,10 +46,57 @@ export default function AboutPage() {
                 </div>
             </div>
 
+            {/* What I work on */}
+            <section className="border-t border-border pt-16">
+                <h2 className="mb-8 flex items-center gap-2 font-heading text-xl font-bold text-text-main">
+                    <Layers className="text-accent"/> What I work on
+                </h2>
+                <div className="grid gap-6 md:grid-cols-2">
+                    {pillars.map((p) => (
+                        <div key={p.title} className="rounded-2xl border border-border bg-surface/30 p-6">
+                            <h3 className="font-heading text-lg font-semibold text-text-main">{p.title}</h3>
+                            <p className="mt-2 font-body text-sm leading-relaxed text-text-muted">{p.summary}</p>
+                            <ul className="mt-4 space-y-2">
+                                {p.points.map((pt) => (
+                                    <li key={pt}
+                                        className="relative pl-4 font-body text-sm leading-relaxed text-text-muted">
+                                        <span className="absolute left-0 top-2 h-1 w-1 rounded-full bg-accent"/>
+                                        {pt}
+                                    </li>
+                                ))}
+                            </ul>
+                            <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+                                {p.evidence.map((e) =>
+                                    e.url.startsWith("/") ? (
+                                        <Link
+                                            key={e.url}
+                                            href={e.url}
+                                            className="inline-flex items-center gap-1.5 font-heading text-xs font-medium text-accent transition-colors hover:text-text-main"
+                                        >
+                                            {e.label}
+                                        </Link>
+                                    ) : (
+                                        <a
+                                            key={e.url}
+                                            href={e.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-1.5 font-heading text-xs font-medium text-accent transition-colors hover:text-text-main"
+                                        >
+                                            <ExternalLink size={12}/> {e.label}
+                                        </a>
+                                    )
+                                )}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
             <div className="mt-16 grid gap-12 border-t border-border pt-16 md:grid-cols-2">
-                <div className="space-y-12">
-                    <h2 className="flex items-center gap-2 font-heading text-xl font-bold text-text-main">
-                        <Terminal className="text-accent"/> Philosophy
+                <div>
+                    <h2 className="mb-8 flex items-center gap-2 font-heading text-xl font-bold text-text-main">
+                        <Terminal className="text-accent"/> How I work
                     </h2>
                     <div className="flex flex-col gap-8">
                         {about.philosophy.map((item) => (
@@ -65,19 +118,35 @@ export default function AboutPage() {
                         <h2 className="mb-6 flex items-center gap-2 font-heading text-xl font-bold text-text-main">
                             <Box className="text-accent"/> Toolkit
                         </h2>
-                        <ul className="flex flex-wrap gap-3">
-                            {about.toolkit.map((tool) => (
-                                <li
-                                    key={tool}
-                                    className="flex items-center gap-2 rounded-lg border border-border bg-bg px-3 py-2 font-heading text-sm text-text-main"
-                                >
-                                    <Check size={14} className="text-accent"/>
-                                    {tool}
-                                </li>
+                        <div className="space-y-5">
+                            {about.toolkit.map((g) => (
+                                <div key={g.group}>
+                                    <h3 className="font-heading text-xs font-semibold uppercase tracking-wider text-text-muted">
+                                        {g.group}
+                                    </h3>
+                                    <ul className="mt-2 flex flex-wrap gap-2">
+                                        {g.items.map((tool) => (
+                                            <li
+                                                key={tool}
+                                                className="rounded-lg border border-border bg-bg px-2.5 py-1 font-heading text-xs text-text-main"
+                                            >
+                                                {tool}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
                             ))}
-                        </ul>
+                        </div>
                     </div>
                 </div>
+            </div>
+
+            <div className="mt-16 rounded-2xl border border-border bg-surface/30 p-8">
+                <h2 className="font-heading text-xl font-bold text-text-main">Background &amp; availability</h2>
+                <p className="mt-3 font-body text-base leading-relaxed text-text-muted">
+                    {lookingFor.background}
+                </p>
+                <p className="mt-3 font-body text-base leading-relaxed text-text-muted">{about.currently}</p>
             </div>
         </div>
     );

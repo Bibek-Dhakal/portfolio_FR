@@ -1,12 +1,13 @@
 import type {Metadata} from "next";
-import {contactCopy, links, mailto} from "@/lib/site-config";
-import {ArrowUpRight, Calendar, FileText, Mail} from "lucide-react";
+import {contactCopy, links, lookingFor, mailto, site} from "@/lib/site-config";
+import {ArrowUpRight, Calendar, FileText, Mail, MapPin} from "lucide-react";
 import {Linkedin} from "@/components/icons";
 import {ContactForm} from "@/components/contact-form";
 import Link from "next/link";
 
 export const metadata: Metadata = {
     title: "Contact — Bibek Dhakal",
+    description: "Get in touch about full-time Associate / Junior ML Engineer and AI Engineer roles.",
 };
 
 const actions = [
@@ -50,15 +51,24 @@ export default function ContactPage() {
                 <p className="mx-auto mt-4 max-w-lg font-body text-lg leading-relaxed text-text-muted">
                     {contactCopy.body}
                 </p>
+                <p className="mt-4 inline-flex items-center gap-1.5 font-heading text-sm text-text-muted">
+                    <MapPin size={14}/> {site.location} · {site.availability}
+                </p>
+                <ul className="mx-auto mt-6 flex max-w-xl flex-wrap justify-center gap-2">
+                    {lookingFor.roles.map((r) => (
+                        <li key={r}
+                            className="rounded-lg border border-border bg-surface px-3 py-1.5 font-heading text-xs text-text-main">
+                            {r}
+                        </li>
+                    ))}
+                </ul>
             </div>
 
             <div className="grid gap-10 md:grid-cols-2 lg:gap-16">
-                {/* Contact Form Section */}
                 <div className="order-2 md:order-1">
                     <ContactForm/>
                 </div>
 
-                {/* Direct Links Section */}
                 <div className="order-1 flex flex-col gap-4 md:order-2">
                     {actions.map((action) => {
                         const Icon = action.icon;
