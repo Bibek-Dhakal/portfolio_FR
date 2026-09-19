@@ -111,17 +111,17 @@ export const caseStudies: CaseStudy[] = [
         title: "Customer Churn Risk Intelligence",
         status: "live",
         problem:
-            "Customer churn severely impacts recurring revenue, but a model that simply guesses 'Will this customer leave?' isn't enough. Marketing teams need to know how likely a customer is to leave and how to prioritize retention budgets effectively, rather than relying on raw binary flags.",
+            "Predicting customer churn in a static Jupyter notebook isn't enough. Marketing teams need actionable risk tiers rather than raw binary flags, and engineering needs a secure, reproducible, containerized pipeline that won't silently fail in production due to upstream schema changes.",
         approach:
-            "I built an end-to-end ML pipeline focused on probability ranking rather than pure classification. After engineering features for financial exposure and service adoption, I evaluated a linear baseline (Logistic Regression) against tree ensembles (Random Forest, LightGBM) using 5-fold stratified cross-validation to manage the 26.5% class imbalance.",
+            "I engineered an enterprise-grade MLOps pipeline. I enforced strict declarative data contracts using Pandera (training) and Pydantic (inference). After feature engineering, I evaluated a linear baseline against tree ensembles using 5-fold stratified CV, tracking all experiments, metrics, and parameters automatically via an MLflow registry.",
         result:
-            "Logistic Regression won. It achieved a Mean CV ROC-AUC of 0.8501 and an Average Precision of 0.6718. Instead of outputting raw probabilities, I translated the predictions into four actionable risk tiers (Low to Very High), allowing the business to allocate intervention budgets strategically based on retention capacity.",
+            "Logistic Regression won with a Mean CV ROC-AUC of 0.8501. I serialized the winning model securely using Skops, then wrapped it in a Dockerized FastAPI microservice. The API translates raw probabilities into four actionable business risk tiers, governed by a modern CI/CD workflow (GitHub Actions, Pytest, Ruff) that tests and releases updates automatically.",
         tradeoff: {
-            label: "Linear simplicity vs. non-linear accuracy",
-            body: "Tree-based models (LightGBM, Random Forest) yielded slightly higher raw accuracy at a default 0.5 threshold, but Logistic Regression provided superior ranking sensitivity across varying risk thresholds. For risk stratification, ranking calibration beats raw binary accuracy.",
+            label: "Security vs. Convenience (Skops over Pickle)",
+            body: "Standard Python `pickle` and `joblib` files are vulnerable to arbitrary code execution if intercepted. I deliberately traded the convenience of standard serialization for `Skops`, enforcing strict type-checking during API inference to adhere to enterprise security standards.",
         },
         nextTime:
-            "Tune the decision threshold down to ~0.35 to prioritize Recall and catch more at-risk users earlier. I also plan to extract the Logistic Regression odds ratios to give support agents explainable reason codes for why a user was flagged.",
+            "Extract Logistic Regression coefficients to provide clear explainability (SHAP values) in the FastAPI response. I also plan to integrate Evidently AI into the serving container to continuously monitor real-time payloads against the training baseline to detect data drift.",
         image: {
             src: "/images/others/churn-model-comparison.png",
             alt: "Bar chart comparing Cross-Validated ROC-AUC across Logistic Regression, Random Forest, and LightGBM",
