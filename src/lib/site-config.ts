@@ -2,7 +2,7 @@
  * Site content config.
  *
  * Every string, link, and project on the site lives here. Edit this file
- * to change copy; page components only render it.
+ * to change the copy; page components only render it.
  */
 
 export const links = {
@@ -112,7 +112,7 @@ export const pillars: Pillar[] = [
     {
         title: "Software engineering",
         summary:
-            "Two years of internships and contracts (2023–2025) building the apps and backends around models.",
+            "Internships and contract jobs (2023–2025) building the apps and backends for various projects.",
         points: [
             "AcademiaOS MVP: FastAPI and Celery backend, Next.js frontend, HTTP-only cookie auth and RBAC.",
             "Flutter, React, and Next.js work across several companies, including support for a Google Play Store launch.",
@@ -154,7 +154,7 @@ export const about = {
         },
     ],
     intro:
-        "I'm an entry-level AI / ML engineer with a software engineering background. My evidence is a ML internship, an ML apprenticeship, several projects with public code, and two years of earlier software work. I'm not claiming years of production ML ownership. I'm looking for a team where I can contribute to real systems and grow over the long term.",
+        "I'm an entry-level AI / ML engineer with a software engineering background. My evidence is a ML internship, an ML apprenticeship, several projects with public code, and earlier software work. I'm not claiming years of production ML ownership. I'm looking for a team where I can contribute to real systems and grow over the long term.",
     currently:
         "Available immediately. My degree exams and internship are finished, and new projects go on GitHub.",
     toolkit: [
