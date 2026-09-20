@@ -154,7 +154,7 @@ export const about = {
         },
     ],
     intro:
-        "I'm an entry-level AI / ML engineer with a software engineering background. My evidence is a three-month ML internship, an ML apprenticeship, several projects with public code, and two years of earlier software work. I'm not claiming years of production ML ownership. I'm looking for a team where I can contribute to real systems and grow over the long term.",
+        "I'm an entry-level AI / ML engineer with a software engineering background. My evidence is a ML internship, an ML apprenticeship, several projects with public code, and two years of earlier software work. I'm not claiming years of production ML ownership. I'm looking for a team where I can contribute to real systems and grow over the long term.",
     currently:
         "Available immediately. My degree exams and internship are finished, and new projects go on GitHub.",
     toolkit: [
@@ -474,7 +474,7 @@ export const experience: { group: string; roles: Role[] }[] = [
             {
                 company: "Skill Shikshya",
                 title: "Data Science & ML Apprentice",
-                period: "Apr 2026 – Jul 2026",
+                period: "Apr 2026 – Jun 2026",
                 kind: "Apprenticeship",
                 bullets: [
                     "Worked through ML mathematics, vector computation, classical ML, and deep-learning fundamentals with hands-on projects.",
@@ -535,8 +535,8 @@ export const education = {
     degree: "Bachelor of Computer Application (BCA)",
     school: "Nihareeka College of Management and Information Technology",
     university: "Tribhuvan University, Nepal",
-    period: "2021 – 2026",
-    note: "Final examinations completed in August 2026. No remaining academic obligations, so I'm available for full-time work immediately.",
+    period: "Completed final semester coursework and examination in August 2026",
+    note: "No remaining academic obligations, so I'm available for full-time work immediately.",
 };
 
 export const certifications: {
@@ -577,9 +577,14 @@ export const certifications: {
                 href: "https://verify.skilljar.com/c/bf7vbtdiv8ti",
             },
             {
-                name: "Claude in Amazon Bedrock",
+                name: "Claude on Amazon Bedrock",
                 issuer: "Anthropic Academy",
                 href: "https://verify.skilljar.com/c/gesgzvi2zhk5",
+            },
+            {
+                name: "Claude on Google Cloud",
+                issuer: "Anthropic Academy",
+                href: "https://verify.skilljar.com/c/umhhhrba6gkf",
             },
         ],
     },
