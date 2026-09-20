@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {about, lookingFor, pillars} from "@/lib/site-config";
 import {Box, ExternalLink, Layers, Terminal} from "lucide-react";
+import NameAndRole from "@/components/name-and-role";
 
 export const metadata: Metadata = {
     title: "About — Bibek Dhakal",
@@ -19,6 +20,9 @@ export default function AboutPage() {
                     <h1 className="font-heading text-3xl font-bold tracking-tight text-text-main sm:text-4xl">
                         About Me
                     </h1>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                        <NameAndRole hideRole/>
+                    </div>
                     <p className="mt-4 max-w-xl font-body text-lg leading-relaxed text-text-muted">
                         {about.intro}
                     </p>

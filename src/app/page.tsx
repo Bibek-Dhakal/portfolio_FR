@@ -3,6 +3,7 @@ import Link from "next/link";
 import {caseStudies, experience, links, lookingFor, pillars, site, stats,} from "@/lib/site-config";
 import {ArrowRight, ExternalLink, FileText, MapPin} from "lucide-react";
 import {Github} from "@/components/icons";
+import NameAndRole from "@/components/name-and-role";
 
 export default function Home() {
     const recent = experience.flatMap((g) => g.roles).slice(0, 3);
@@ -25,6 +26,7 @@ export default function Home() {
                     className="pointer-events-none absolute left-1/4 top-1/4 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/10 blur-[120px]"/>
 
                 <div className="relative mx-auto w-full max-w-4xl px-6 py-24">
+                    <NameAndRole/>
                     <div className="animate-fade-in-up" style={{animationDelay: "0ms"}}>
                         <div className="mb-6 flex flex-wrap items-center gap-3">
                             <div
