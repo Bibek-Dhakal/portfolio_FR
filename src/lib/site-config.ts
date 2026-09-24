@@ -48,8 +48,8 @@ export const site = {
 /** Numbers that appear elsewhere on the site, each backed by a project below. */
 export const stats = [
     {value: "0.94 → 0.64", label: "Precision@50 once whole clients were held out (FlyRank capstone)"},
+    {value: ">90%", label: "Test coverage strictly enforced in CI for the TabTrace ML pipeline"},
     {value: "0.85", label: "5-fold CV ROC-AUC, churn model (logistic regression beat tree ensembles)"},
-    {value: "~28M", label: "parameter transformer trained on TinyStories, exported to INT8 ONNX"},
     {value: "PyPI", label: "LexiByte: BPE tokenizer built from scratch and published"},
 ];
 
@@ -67,17 +67,15 @@ export const pillars: Pillar[] = [
         summary:
             "Framing a problem, choosing an honest validation design, and comparing against simple baselines.",
         points: [
+            "TabTrace: Reproducible pipeline that halts on data leakage, registers feature rationale in code, and evaluates via stratified cross-validation.",
             "FlyRank capstone: client-holdout split, baseline rule vs. Logistic Regression vs. Random Forest, and two deliberately planted leaks to test the validation.",
             "Churn model: 5-fold stratified CV; logistic regression (0.8501 ROC-AUC) beat Random Forest and LightGBM.",
             "Phishing detector: XGBoost with Platt-scaled probabilities and soft-voting fusion across two feature sources.",
         ],
         evidence: [
+            {label: "TabTrace repo", url: "https://github.com/Bibek-Dhakal/tabtrace"},
             {label: "FlyRank paper", url: "https://bibek-dhakal.github.io/applied-search-intelligence/"},
             {label: "Churn repo", url: "https://github.com/Bibek-Dhakal/customer-churn-risk-intelligence"},
-            {
-                label: "Phishing repo",
-                url: "https://github.com/bibek-dhakal/multimodal-phishing-detection-platform",
-            },
         ],
     },
     {
@@ -86,10 +84,11 @@ export const pillars: Pillar[] = [
             "Turning a model into something that runs, is validated at its edges, and can be released repeatably.",
         points: [
             "Churn pipeline: Pandera and Pydantic data contracts, MLflow experiment tracking, Skops serialization, Dockerized FastAPI service.",
-            "CI/CD with GitHub Actions, Pytest, Ruff, and Release Please for versioned releases.",
+            "CI/CD with GitHub Actions, Pytest (enforcing >90% coverage in TabTrace), Ruff, and Release Please for versioned releases.",
             "FastAPI with Docker or Docker Compose across the churn, phishing, and Forge-LM projects.",
         ],
         evidence: [
+            {label: "TabTrace repo", url: "https://github.com/Bibek-Dhakal/tabtrace"},
             {label: "Churn repo", url: "https://github.com/Bibek-Dhakal/customer-churn-risk-intelligence"},
             {label: "Forge-LM", url: "https://github.com/bibek-dhakal/forge-lm"},
         ],
@@ -138,15 +137,15 @@ export const about = {
     philosophy: [
         {
             title: "Baseline before model",
-            body: "I write down a simple, transparent rule or linear model first, then make the fancier model earn its place. In my churn project logistic regression beat Random Forest and LightGBM. In my FlyRank capstone the hand-written rule scored 0.260 Precision@50 on unseen clients, slightly below chance (0.286), which made the model's 0.640 a real result.",
+            body: "I write down a simple, transparent rule or linear model first, then make the fancier model earn its place. In both my churn project and TabTrace pipeline, logistic regression beat the tree ensembles. In my FlyRank capstone the hand-written rule scored 0.260 Precision@50 on unseen clients, slightly below chance (0.286), which made the model's 0.640 a real result.",
         },
         {
             title: "Suspect the split first",
-            body: "A convenient split flatters a model. My capstone's random split scored 0.940 Precision@50; holding out whole clients gave 0.640. I split by group, keep label components out of the features, and plant a leak on purpose to check that my tests catch it.",
+            body: "A convenient split flatters a model. My capstone's random split scored 0.940 Precision@50; holding out whole clients gave 0.640. I split by group, keep label components out of the features, and build tools like TabTrace that enforce deterministic, saved splits with strict leakage checks.",
         },
         {
             title: "Build the whole path",
-            body: "A model is only useful if something can call it. I validate data at the edges (Pandera, Pydantic), track experiments, containerize the service, and automate tests and releases, so the work runs outside a notebook.",
+            body: "A model is only useful if something can call it, and reproducible if its pipeline is tested. I unit-test preprocessing logic (TabTrace), validate data at the edges (Pandera, Pydantic), track experiments, containerize the service, and automate tests and releases.",
         },
         {
             title: "Say what it isn't",
@@ -344,6 +343,20 @@ export type Project = {
 
 export const projects: Project[] = [
     {
+        slug: "tabtrace",
+        title: "TabTrace",
+        tagline: "Reproducible tabular ML pipeline enforcing justified feature engineering and cross-validated evaluation.",
+        highlights: [
+            "Rejects 'notebook-only' ML: every stage from ingestion to feature engineering is a pure, unit-tested function.",
+            "Enforces declarative feature justifications via a custom registry decorator; the pipeline halts if a rationale is missing.",
+            "Uses deterministic, saved train/val/test splits with explicit leakage checks to ensure honest evaluation.",
+            "Compares a Logistic Regression baseline against a grid-searched Random Forest using 5-fold cross-validation.",
+            "Automated CI/CD gating merges with Pytest (>90% coverage enforced), Ruff formatting, and Release Please semantic versioning.",
+        ],
+        stack: ["Python", "Scikit-learn", "Pandas", "Pytest", "GitHub Actions"],
+        links: [{label: "Code", url: "https://github.com/Bibek-Dhakal/tabtrace"}],
+    },
+    {
         slug: "aegis-omnisearch-agent",
         title: "Aegis Omnisearch Agent",
         tagline: "Lightweight RAG agent for resource-constrained deployments.",
@@ -428,8 +441,6 @@ export const projects: Project[] = [
         ],
         stack: ["Reinforcement learning", "PPO", "Python"],
         scope: "A standard RL benchmark environment, done as a learning exercise.",
-        // The old GitHub repo link was removed (repo no longer exists).
-        // Shows the Hugging Face model card once links.lunarLanderModelCard is set.
         links: links.lunarLanderModelCard
             ? [{label: "Model card (Hugging Face)", url: links.lunarLanderModelCard}]
             : [],
