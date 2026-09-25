@@ -72,11 +72,13 @@ export const pillars: Pillar[] = [
             "FlyRank capstone: client-holdout split, baseline rule vs. Logistic Regression vs. Random Forest, and two deliberately planted leaks to test the validation.",
             "Churn model: 5-fold stratified CV; logistic regression (0.8501 ROC-AUC) beat Random Forest and LightGBM.",
             "Phishing detector: XGBoost with Platt-scaled probabilities and soft-voting fusion across two feature sources.",
+            "OverfitLab: Demonstrated the diagnosis of train/val divergence and corrected it with Dropout and Weight Decay on a PyTorch MLP."
         ],
         evidence: [
             {label: "TabTrace repo", url: "https://github.com/Bibek-Dhakal/tabtrace"},
             {label: "FlyRank paper", url: "https://bibek-dhakal.github.io/applied-search-intelligence/"},
             {label: "Churn repo", url: "https://github.com/Bibek-Dhakal/customer-churn-risk-intelligence"},
+            {label: "OverfitLab repo", url: "https://github.com/Bibek-Dhakal/overfitlab"}
         ],
     },
     {
@@ -370,6 +372,20 @@ export const projects: Project[] = [
         ],
         stack: ["FastAPI", "Docker", "Python", "Pytest", "Scikit-learn", "GitHub Actions"],
         links: [{label: "Code", url: "https://github.com/Bibek-Dhakal/modelgate"}],
+    },
+    {
+        slug: "overfitlab",
+        title: "OverfitLab",
+        tagline: "Deep learning experiment demonstrating the diagnosis and correction of overfitting.",
+        highlights: [
+            "Simulated a classic neural network failure mode (memorizing noise) using a highly non-linear synthetic dataset.",
+            "Diagnosed train/validation divergence on a deep Multi-Layer Perceptron (MLP) baseline.",
+            "Restored model generalization by applying Dropout and L2 Weight Decay using PyTorch.",
+            "Packaged as a reproducible Python module with deterministic data generation and Matplotlib visualizations.",
+            "Enforced code quality and robustness with Pytest, Ruff, pre-commit hooks, and GitHub Actions."
+        ],
+        stack: ["PyTorch", "Python", "Scikit-learn", "Matplotlib", "Pytest"],
+        links: [{label: "Code", url: "https://github.com/Bibek-Dhakal/overfitlab"}],
     },
     {
         slug: "aegis-omnisearch-agent",
