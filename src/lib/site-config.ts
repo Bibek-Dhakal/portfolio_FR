@@ -49,6 +49,7 @@ export const site = {
 export const stats = [
     {value: "0.94 → 0.64", label: "Precision@50 once whole clients were held out (FlyRank capstone)"},
     {value: ">90%", label: "Test coverage strictly enforced in CI for the TabTrace ML pipeline"},
+    {value: "0", label: "Boilerplate Python code required to serve a new model via ModelGate"},
     {value: "0.85", label: "5-fold CV ROC-AUC, churn model (logistic regression beat tree ensembles)"},
     {value: "PyPI", label: "LexiByte: BPE tokenizer built from scratch and published"},
 ];
@@ -83,14 +84,15 @@ export const pillars: Pillar[] = [
         summary:
             "Turning a model into something that runs, is validated at its edges, and can be released repeatably.",
         points: [
+            "ModelGate: Containerized FastAPI inference service featuring dynamic URL model loading, strict JSON schema validation, and error shielding.",
             "Churn pipeline: Pandera and Pydantic data contracts, MLflow experiment tracking, Skops serialization, Dockerized FastAPI service.",
-            "CI/CD with GitHub Actions, Pytest (enforcing >90% coverage in TabTrace), Ruff, and Release Please for versioned releases.",
+            "CI/CD with GitHub Actions, Pytest, Ruff, and Release Please across TabTrace, ModelGate, and Churn projects.",
             "FastAPI with Docker or Docker Compose across the churn, phishing, and Forge-LM projects.",
         ],
         evidence: [
+            {label: "ModelGate repo", url: "https://github.com/Bibek-Dhakal/modelgate"},
             {label: "TabTrace repo", url: "https://github.com/Bibek-Dhakal/tabtrace"},
             {label: "Churn repo", url: "https://github.com/Bibek-Dhakal/customer-churn-risk-intelligence"},
-            {label: "Forge-LM", url: "https://github.com/bibek-dhakal/forge-lm"},
         ],
     },
     {
@@ -145,7 +147,7 @@ export const about = {
         },
         {
             title: "Build the whole path",
-            body: "A model is only useful if something can call it, and reproducible if its pipeline is tested. I unit-test preprocessing logic (TabTrace), validate data at the edges (Pandera, Pydantic), track experiments, containerize the service, and automate tests and releases.",
+            body: "A model is only useful if something can call it, and reproducible if its pipeline is tested. I unit-test preprocessing logic (TabTrace), validate data at the edges (ModelGate, Pandera), track experiments, containerize the service, and automate tests and releases.",
         },
         {
             title: "Say what it isn't",
@@ -355,6 +357,19 @@ export const projects: Project[] = [
         ],
         stack: ["Python", "Scikit-learn", "Pandas", "Pytest", "GitHub Actions"],
         links: [{label: "Code", url: "https://github.com/Bibek-Dhakal/tabtrace"}],
+    },
+    {
+        slug: "modelgate",
+        title: "ModelGate",
+        tagline: "Production-ready, containerized machine learning inference API with zero boilerplate.",
+        highlights: [
+            "Dynamic artifact loading: instantly serves Scikit-Learn/Joblib models from local paths or direct HTTP URLs via environment variables.",
+            "Strict JSON Schema boundary validation that dynamically blocks malformed payloads from ever reaching the inference engine.",
+            "Robust 'Error Shielding' overrides default exception handlers to prevent raw Python stack traces from leaking to clients, returning safe 422/500 JSON.",
+            "Fully Docker-native, rigorously tested with Pytest, and enforced by GitHub Actions (Ruff linting, Release Please versioning)."
+        ],
+        stack: ["FastAPI", "Docker", "Python", "Pytest", "Scikit-learn", "GitHub Actions"],
+        links: [{label: "Code", url: "https://github.com/Bibek-Dhakal/modelgate"}],
     },
     {
         slug: "aegis-omnisearch-agent",
