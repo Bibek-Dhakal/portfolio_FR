@@ -12,6 +12,7 @@ export const links = {
     booking: "https://cal.com/bibek-dhakal-kw306d",
     kaggle: "https://www.kaggle.com/bibekdhakal8366",
     pypi: "https://pypi.org/project/lexibyte/",
+    modelgatePypi: "https://pypi.org/project/modelgate-py/",
     lunarLanderModelCard: "https://huggingface.co/imbibek8366/ppo-LunarLander-v2",
     // Put your PDF in /public (e.g., /public/bibek-dhakal-cv.pdf) and set
     // NEXT_PUBLIC_CV_URL=/bibek-dhakal-cv.pdf in .env.local and on Vercel.
@@ -51,7 +52,7 @@ export const stats = [
     {value: ">90%", label: "Test coverage strictly enforced in CI for the TabTrace ML pipeline"},
     {value: "0", label: "Boilerplate Python code required to serve a new model via ModelGate"},
     {value: "0.85", label: "5-fold CV ROC-AUC, churn model (logistic regression beat tree ensembles)"},
-    {value: "PyPI", label: "LexiByte: BPE tokenizer built from scratch and published"},
+    {value: "PyPI", label: "LexiByte & ModelGate: Packaged from scratch and published publicly"},
 ];
 
 /** Capability areas. Each claim must be backed by the evidence links. */
@@ -86,7 +87,7 @@ export const pillars: Pillar[] = [
         summary:
             "Turning a model into something that runs, is validated at its edges, and can be released repeatably.",
         points: [
-            "ModelGate: Containerized FastAPI inference service featuring dynamic URL model loading, strict JSON schema validation, and error shielding.",
+            "ModelGate: Containerized FastAPI inference service and native Python SDK featuring dynamic URL model loading, strict JSON schema validation, and error shielding.",
             "Churn pipeline: Pandera and Pydantic data contracts, MLflow experiment tracking, Skops serialization, Dockerized FastAPI service.",
             "CI/CD with GitHub Actions, Pytest, Ruff, and Release Please across TabTrace, ModelGate, and Churn projects.",
             "FastAPI with Docker or Docker Compose across the churn, phishing, and Forge-LM projects.",
@@ -363,15 +364,19 @@ export const projects: Project[] = [
     {
         slug: "modelgate",
         title: "ModelGate",
-        tagline: "Production-ready, containerized machine learning inference API with zero boilerplate.",
+        tagline: "Production-ready, containerized machine learning inference API and Python SDK.",
         highlights: [
-            "Dynamic artifact loading: instantly serves Scikit-Learn/Joblib models from local paths or direct HTTP URLs via environment variables.",
+            "Dynamic artifact loading: instantly serves Scikit-Learn/Joblib models from local paths or HTTP URLs via environment variables.",
+            "Native Python SDK: Available on PyPI (modelgate-py) to integrate dynamic loading and strict validation directly into existing codebases.",
             "Strict JSON Schema boundary validation that dynamically blocks malformed payloads from ever reaching the inference engine.",
             "Robust 'Error Shielding' overrides default exception handlers to prevent raw Python stack traces from leaking to clients, returning safe 422/500 JSON.",
-            "Fully Docker-native, rigorously tested with Pytest, and enforced by GitHub Actions (Ruff linting, Release Please versioning)."
+            "Fully Docker-native, rigorously tested with Pytest (including interactive SDK notebook tests), and enforced by GitHub Actions."
         ],
-        stack: ["FastAPI", "Docker", "Python", "Pytest", "Scikit-learn", "GitHub Actions"],
-        links: [{label: "Code", url: "https://github.com/Bibek-Dhakal/modelgate"}],
+        stack: ["FastAPI", "Docker", "Python", "PyPI", "Pytest", "Scikit-learn", "GitHub Actions"],
+        links: [
+            {label: "Code", url: "https://github.com/Bibek-Dhakal/modelgate"},
+            {label: "PyPI", url: links.modelgatePypi}
+        ],
     },
     {
         slug: "overfitlab",
