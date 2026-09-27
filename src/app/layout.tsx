@@ -1,5 +1,4 @@
 import type {Metadata} from "next";
-import {IBM_Plex_Sans, IBM_Plex_Serif} from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import {links, mailto, nav, site} from "@/lib/site-config";
@@ -8,16 +7,24 @@ import {Github, Linkedin} from "@/components/icons";
 import React from "react";
 import FrVerification from "@/components/fr-verification";
 import {Analytics} from "@vercel/analytics/next";
+import localFont from "next/font/local";
 
-const plexSans = IBM_Plex_Sans({
-    subsets: ["latin"],
-    weight: ["400", "500", "600", "700"],
+// Load official Google TTF files locally
+const plexSans = localFont({
+    src: [
+        {path: "../../public/fonts/IBMPlexSans-Regular.ttf", weight: "400", style: "normal"},
+        {path: "../../public/fonts/IBMPlexSans-Medium.ttf", weight: "500", style: "normal"},
+        {path: "../../public/fonts/IBMPlexSans-SemiBold.ttf", weight: "600", style: "normal"},
+        {path: "../../public/fonts/IBMPlexSans-Bold.ttf", weight: "700", style: "normal"},
+    ],
     variable: "--font-plex-sans",
 });
 
-const plexSerif = IBM_Plex_Serif({
-    subsets: ["latin"],
-    weight: ["400", "500"],
+const plexSerif = localFont({
+    src: [
+        {path: "../../public/fonts/IBMPlexSerif-Regular.ttf", weight: "400", style: "normal"},
+        {path: "../../public/fonts/IBMPlexSerif-Medium.ttf", weight: "500", style: "normal"},
+    ],
     variable: "--font-plex-serif",
 });
 
