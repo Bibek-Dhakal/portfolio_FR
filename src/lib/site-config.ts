@@ -49,7 +49,9 @@ export const site = {
 /** Numbers that appear elsewhere on the site, each backed by a project below. */
 export const stats = [
     {value: "0.94 → 0.64", label: "Precision@50 once whole clients were held out (FlyRank capstone)"},
+    {value: "SHA-256", label: "Cryptographic hashing linking model artifacts to exact data versions (FlowTrace)"},
     {value: ">90%", label: "Test coverage strictly enforced in CI for the TabTrace ML pipeline"},
+    {value: "0", label: "Dropped requests during K8s rolling updates under load (ServeScale)"},
     {value: "0", label: "Boilerplate Python code required to serve a new model via ModelGate"},
     {value: "0.85", label: "5-fold CV ROC-AUC, churn model (logistic regression beat tree ensembles)"},
     {value: "PyPI", label: "LexiByte & ModelGate: Packaged from scratch and published publicly"},
@@ -87,14 +89,16 @@ export const pillars: Pillar[] = [
         summary:
             "Turning a model into something that runs, is validated at its edges, and can be released repeatably.",
         points: [
+            "FlowTrace: DAG-orchestrated pipeline using Prefect, Pandera quality gates, and MLflow lineage tracking.",
+            "ServeScale: Scalable ML serving on Kubernetes with ONNX INT8 quantization and zero-downtime rollouts verified by Locust.",
             "ModelGate: Containerized FastAPI inference service and native Python SDK featuring dynamic URL model loading, strict JSON schema validation, and error shielding.",
             "Churn pipeline: Pandera and Pydantic data contracts, MLflow experiment tracking, Skops serialization, Dockerized FastAPI service.",
-            "CI/CD with GitHub Actions, Pytest, Ruff, and Release Please across TabTrace, ModelGate, and Churn projects.",
-            "FastAPI with Docker or Docker Compose across the churn, phishing, and Forge-LM projects.",
+            "CI/CD with GitHub Actions, Pytest, Ruff, and Release Please across TabTrace, ModelGate, FlowTrace, and Churn projects."
         ],
         evidence: [
+            {label: "FlowTrace repo", url: "https://github.com/Bibek-Dhakal/flowtrace"},
+            {label: "ServeScale repo", url: "https://github.com/Bibek-Dhakal/servescale"},
             {label: "ModelGate repo", url: "https://github.com/Bibek-Dhakal/modelgate"},
-            {label: "TabTrace repo", url: "https://github.com/Bibek-Dhakal/tabtrace"},
             {label: "Churn repo", url: "https://github.com/Bibek-Dhakal/customer-churn-risk-intelligence"},
         ],
     },
@@ -199,8 +203,10 @@ export const about = {
             items: [
                 "FastAPI",
                 "Docker",
+                "Kubernetes",
                 "Celery",
                 "MLflow",
+                "Prefect",
                 "Pandera / Pydantic",
                 "GitHub Actions",
                 "WebSockets",
@@ -348,6 +354,20 @@ export type Project = {
 
 export const projects: Project[] = [
     {
+        slug: "flowtrace",
+        title: "FlowTrace",
+        tagline: "DAG-orchestrated, parameterized, lineage-tracked ML pipeline with automated quality gating.",
+        highlights: [
+            "Orchestrated the pipeline as an explicit Directed Acyclic Graph (DAG) using Prefect to monitor state transitions and isolate failing steps.",
+            "Enforced strict declarative data boundaries with Pandera, natively halting the pipeline before training jobs if data is corrupt.",
+            "Implemented end-to-end lineage tracking with MLflow, cryptographically linking every model artifact to a SHA256 hash of its exact training data.",
+            "Automated model promotion logic to evaluate new runs against the production champion model and assign aliases accordingly.",
+            "Maintained strict engineering standards using Ruff, pre-commit hooks, Pytest, and GitHub Actions for semantic versioning via Release Please."
+        ],
+        stack: ["Prefect", "MLflow", "Pandera", "Scikit-learn", "Python", "GitHub Actions"],
+        links: [{label: "Code", url: "https://github.com/Bibek-Dhakal/flowtrace"}],
+    },
+    {
         slug: "tabtrace",
         title: "TabTrace",
         tagline: "Reproducible tabular ML pipeline enforcing justified feature engineering and cross-validated evaluation.",
@@ -377,6 +397,19 @@ export const projects: Project[] = [
             {label: "Code", url: "https://github.com/Bibek-Dhakal/modelgate"},
             {label: "PyPI", url: links.modelgatePypi}
         ],
+    },
+    {
+        slug: "servescale",
+        title: "ServeScale",
+        tagline: "Horizontally scalable, latency-optimized machine learning model serving system built on Kubernetes.",
+        highlights: [
+            "Leveraged ONNX Runtime and 8-bit Dynamic Quantization to significantly minimize the model's container memory footprint and CPU latency.",
+            "Configured Kubernetes deployment topology with liveness and readiness probes to safely handle auto-scaling and pod lifecycle events.",
+            "Integrated Locust load testing to explicitly verify that exactly 0 requests are dropped during live RollingUpdates under concurrent HTTP traffic.",
+            "Built as a robust FastAPI application, containerized via Docker, and tested strictly via Pytest."
+        ],
+        stack: ["Kubernetes", "ONNX Runtime", "FastAPI", "Docker", "Locust", "Pytest"],
+        links: [{label: "Code", url: "https://github.com/Bibek-Dhakal/servescale"}],
     },
     {
         slug: "overfitlab",
