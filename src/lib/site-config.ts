@@ -13,6 +13,7 @@ export const links = {
     kaggle: "https://www.kaggle.com/bibekdhakal8366",
     pypi: "https://pypi.org/project/lexibyte/",
     modelgatePypi: "https://pypi.org/project/modelgate-py/",
+    statTestProPypi: "https://pypi.org/project/stattest-pro/",
     lunarLanderModelCard: "https://huggingface.co/imbibek8366/ppo-LunarLander-v2",
     // Put your PDF in /public (e.g., /public/bibek-dhakal-cv.pdf) and set
     // NEXT_PUBLIC_CV_URL=/bibek-dhakal-cv.pdf in .env.local and on Vercel.
@@ -49,13 +50,27 @@ export const site = {
 /** Numbers that appear elsewhere on the site, each backed by a project below. */
 export const stats = [
     {value: "0.94 → 0.64", label: "Precision@50 once whole clients were held out (FlyRank capstone)"},
+    {
+        value: "p < 0.01",
+        label: "Threshold for automated Sample Ratio Mismatch (SRM) anomaly detection to halt invalid A/B tests (StatTest-Pro)"
+    },
     {value: "SHA-256", label: "Cryptographic hashing linking model artifacts to exact data versions (FlowTrace)"},
+    {
+        value: "~174ms",
+        label: "To process 1M+ transactional rows and compute complex rolling LTV & retention via DuckDB (CohortLTV-Engine)"
+    },
+    {
+        value: "[XX]ms",
+        label: "To dynamically transform [XX,XXX]+ raw records into a validated dimensional Star Schema (DataMart-Flex)"
+    },
     {value: "2.24s", label: "To extract, clean, validate, and load 100k messy ETL records (DataCleanse-Lite)"},
     {value: "0", label: "Dropped requests during K8s rolling updates under load (ServeScale)"},
     {value: "0", label: "Boilerplate Python code required to serve a new model via ModelGate"},
-    {value: "0.85", label: "5-fold CV ROC-AUC, churn model (logistic regression beat tree ensembles)"},
-    {value: "PyPI", label: "LexiByte & ModelGate: Packaged from scratch and published publicly"},
-    {value: "5", label: "Slides automatically generated into an executive presentation from raw synthetic data via SQL & Python (InsightStory-EDA)"},
+    {value: "PyPI", label: "StatTest-Pro, LexiByte & ModelGate: Packaged from scratch and published publicly"},
+    {
+        value: "5",
+        label: "Slides automatically generated into an executive presentation from raw synthetic data via SQL & Python (InsightStory-EDA)"
+    },
 ];
 
 /** Capability areas. Each claim must be backed by the evidence links. */
@@ -72,6 +87,7 @@ export const pillars: Pillar[] = [
         summary:
             "Framing a problem, choosing an honest validation design, and comparing against simple baselines.",
         points: [
+            "StatTest-Pro: End-to-end A/B testing SDK published to PyPI that enforces statistical rigor by natively halting invalid tests on Sample Ratio Mismatch (SRM) anomalies.",
             "TabTrace: Reproducible pipeline that halts on data leakage, registers feature rationale in code, and evaluates via stratified cross-validation.",
             "FlyRank capstone: client-holdout split, baseline rule vs. Logistic Regression vs. Random Forest, and two deliberately planted leaks to test the validation.",
             "Churn model: 5-fold stratified CV; logistic regression (0.8501 ROC-AUC) beat Random Forest and LightGBM.",
@@ -79,20 +95,22 @@ export const pillars: Pillar[] = [
             "OverfitLab: Demonstrated the diagnosis of train/val divergence and corrected it with Dropout and Weight Decay on a PyTorch MLP."
         ],
         evidence: [
+            {label: "StatTest-Pro repo", url: "https://github.com/Bibek-Dhakal/StatTest-Pro"},
             {label: "TabTrace repo", url: "https://github.com/Bibek-Dhakal/tabtrace"},
             {label: "FlyRank paper", url: "https://bibek-dhakal.github.io/applied-search-intelligence/"},
             {label: "Churn repo", url: "https://github.com/Bibek-Dhakal/customer-churn-risk-intelligence"},
-            {label: "OverfitLab repo", url: "https://github.com/Bibek-Dhakal/overfitlab"}
         ],
     },
     {
-        title: "ML services & MLOps",
+        title: "ML services, Data & MLOps",
         summary:
             "Turning a model into something that runs, is validated at its edges, and can be released repeatably.",
         points: [
             "FlowTrace: DAG-orchestrated pipeline using Prefect, Pandera quality gates, and MLflow lineage tracking.",
             "ServeScale: Scalable ML serving on Kubernetes with ONNX INT8 quantization and zero-downtime rollouts verified by Locust.",
             "ModelGate: Containerized FastAPI inference service and native Python SDK featuring dynamic URL model loading, strict JSON schema validation, and error shielding.",
+            "DataMart-Flex: Dynamic ETL engine utilizing DuckDB and Python to build verified Star Schema models with strict declarative data contracts.",
+            "CohortLTV-Engine: Scheduled Python & DuckDB analytical pipeline computing complex SQL window functions across 1M+ rows in ~174ms with full audit logging.",
             "DataCleanse-Lite: High-throughput ETL pipeline utilizing Pandas and Pydantic, cleaning and loading 100k records into SQLite in 2.24s with quarantine gating.",
             "CI/CD with GitHub Actions, Pytest, Ruff, and Release Please semantic versioning universally enforced across repositories."
         ],
@@ -100,6 +118,8 @@ export const pillars: Pillar[] = [
             {label: "FlowTrace repo", url: "https://github.com/Bibek-Dhakal/flowtrace"},
             {label: "ServeScale repo", url: "https://github.com/Bibek-Dhakal/servescale"},
             {label: "ModelGate repo", url: "https://github.com/Bibek-Dhakal/modelgate"},
+            {label: "DataMart-Flex repo", url: "https://github.com/Bibek-Dhakal/DataMart-Flex"},
+            {label: "CohortLTV-Engine", url: "https://github.com/Bibek-Dhakal/CohortLTVEngine"},
             {label: "DataCleanse-Lite", url: "https://github.com/Bibek-Dhakal/data-cleanse-lite"},
         ],
     },
@@ -178,6 +198,8 @@ export const about = {
                 "TensorFlow",
                 "Scikit-learn",
                 "XGBoost",
+                "SciPy",
+                "Statsmodels",
                 "NumPy",
                 "Pandas",
                 "OpenCV",
@@ -355,6 +377,50 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+    {
+        slug: "stattest-pro",
+        title: "StatTest-Pro",
+        tagline: "End-to-End A/B Testing Analysis Framework with automated SRM checks and executive reporting.",
+        highlights: [
+            "Engineered a complete Python SDK that calculates required sample sizes pre-test using Statsmodels to ensure well-powered experiments.",
+            "Enforced statistical rigor with automated Sample Ratio Mismatch (SRM) checks via Chi-Square Goodness-of-Fit, natively halting evaluations on traffic anomalies.",
+            "Evaluated proportional metrics using Z-tests to compute exact p-values, relative lifts, and 95% Confidence Intervals.",
+            "Programmatically generated 1-page HTML executive reports featuring Seaborn/Matplotlib data visualizations and Jinja2 templating.",
+            "Packaged the framework from scratch and published it natively to PyPI with fully automated semantic versioning via GitHub Actions and Google Release Please."
+        ],
+        stack: ["Python", "SciPy", "Statsmodels", "Jinja2", "Seaborn", "Pytest", "PyPI", "GitHub Actions"],
+        links: [
+            {label: "Code", url: "https://github.com/Bibek-Dhakal/StatTest-Pro"},
+            {label: "PyPI", url: links.statTestProPypi}
+        ],
+    },
+    {
+        slug: "datamart-flex",
+        title: "DataMart-Flex",
+        tagline: "Dynamic, configuration-driven ETL engine for building dimensional data marts.",
+        highlights: [
+            "Engineered a flexible data pipeline utilizing DuckDB and Python to dynamically transform raw, multi-source datasets into strict Star Schema models (Fact and Dimension tables).",
+            "Enforced declarative data quality checks via Pydantic/Pandera, gracefully quarantining malformed records to prevent them from polluting downstream analytics.",
+            "Optimized query execution and memory footprint, processing [XX,XXX]+ rows in [XX]ms.",
+            "Maintained strict engineering standards with end-to-end Pytest coverage, Ruff linting/formatting, pre-commit hooks, and automated semantic versioning via Release Please."
+        ],
+        stack: ["Python", "DuckDB", "Pandas", "SQL", "Pytest", "GitHub Actions"],
+        links: [{label: "Code", url: "https://github.com/Bibek-Dhakal/DataMart-Flex"}],
+    },
+    {
+        slug: "cohortltv-engine",
+        title: "CohortLTV-Engine",
+        tagline: "Automated Customer Cohort Retention and Lifetime Value (LTV) Analytics Engine.",
+        highlights: [
+            "In-process analytics using DuckDB to process 1,000,000+ transactional rows locally in ~174ms, massively exceeding the 5-second SLA constraint.",
+            "Engineered advanced SQL pipelines utilizing Window Functions, CTEs, and aggregated joins to accurately compute month-over-month retention and rolling LTV metrics.",
+            "Built an automated Python ETL runner scheduled via GitHub Actions with comprehensive execution metadata logging and database handling.",
+            "Outputs dimensional aggregated flat files perfectly formatted for BI consumption (e.g., Power BI, Tableau).",
+            "Maintained strict engineering standards with end-to-end Pytest coverage, Ruff linting/formatting, pre-commit hooks, and Release Please semantic versioning."
+        ],
+        stack: ["Python", "DuckDB", "SQL", "Pytest", "GitHub Actions"],
+        links: [{label: "Code", url: "https://github.com/Bibek-Dhakal/CohortLTVEngine"}],
+    },
     {
         slug: "execpulse-bi",
         title: "ExecPulse-BI",
