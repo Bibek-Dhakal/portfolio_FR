@@ -60,8 +60,8 @@ export const stats = [
         label: "To process 1M+ transactional rows and compute complex rolling LTV & retention via DuckDB (CohortLTV-Engine)"
     },
     {
-        value: "[XX]ms",
-        label: "To dynamically transform [XX,XXX]+ raw records into a validated dimensional Star Schema (DataMart-Flex)"
+        value: "100k+",
+        label: "Synthetic transactions dynamically transformed into a centralized Star Schema using DuckDB (DataMart-Flex)"
     },
     {value: "2.24s", label: "To extract, clean, validate, and load 100k messy ETL records (DataCleanse-Lite)"},
     {value: "0", label: "Dropped requests during K8s rolling updates under load (ServeScale)"},
@@ -109,7 +109,7 @@ export const pillars: Pillar[] = [
             "FlowTrace: DAG-orchestrated pipeline using Prefect, Pandera quality gates, and MLflow lineage tracking.",
             "ServeScale: Scalable ML serving on Kubernetes with ONNX INT8 quantization and zero-downtime rollouts verified by Locust.",
             "ModelGate: Containerized FastAPI inference service and native Python SDK featuring dynamic URL model loading, strict JSON schema validation, and error shielding.",
-            "DataMart-Flex: Dynamic ETL engine utilizing DuckDB and Python to build verified Star Schema models with strict declarative data contracts.",
+            "DataMart-Flex: Enterprise ETL pipeline utilizing DuckDB and Python to transform 100k+ mock transactions into a Kimball Star Schema, visualized via explicit DAX measures in Power BI.",
             "CohortLTV-Engine: Scheduled Python & DuckDB analytical pipeline computing complex SQL window functions across 1M+ rows in ~174ms with full audit logging.",
             "DataCleanse-Lite: High-throughput ETL pipeline utilizing Pandas and Pydantic, cleaning and loading 100k records into SQLite in 2.24s with quarantine gating.",
             "CI/CD with GitHub Actions, Pytest, Ruff, and Release Please semantic versioning universally enforced across repositories."
@@ -397,14 +397,14 @@ export const projects: Project[] = [
     {
         slug: "datamart-flex",
         title: "DataMart-Flex",
-        tagline: "Dynamic, configuration-driven ETL engine for building dimensional data marts.",
+        tagline: "Enterprise Star-Schema Data Mart and Self-Serve BI Analytics Hub powered by DuckDB.",
         highlights: [
-            "Engineered a flexible data pipeline utilizing DuckDB and Python to dynamically transform raw, multi-source datasets into strict Star Schema models (Fact and Dimension tables).",
-            "Enforced declarative data quality checks via Pydantic/Pandera, gracefully quarantining malformed records to prevent them from polluting downstream analytics.",
-            "Optimized query execution and memory footprint, processing [XX,XXX]+ rows in [XX]ms.",
-            "Maintained strict engineering standards with end-to-end Pytest coverage, Ruff linting/formatting, pre-commit hooks, and automated semantic versioning via Release Please."
+            "Engineered an automated ETL pipeline using Python and DuckDB to transform 100,000+ raw transactional records into a strict Kimball-methodology dimensional model.",
+            "Generated realistic synthetic business datasets (customers, products, channels, and orders) using the Python Faker library to simulate an enterprise data ecosystem.",
+            "Built a comprehensive Power BI showcase dashboard utilizing explicit DAX and Time Intelligence measures (YTD, MoM Growth, Rolling Averages) for executive reporting.",
+            "Maintained strict engineering standards with automated Pytest coverage, Ruff linting, pre-commit hooks, and Release Please semantic versioning via GitHub Actions."
         ],
-        stack: ["Python", "DuckDB", "Pandas", "SQL", "Pytest", "GitHub Actions"],
+        stack: ["Python", "DuckDB", "Power BI", "DAX", "Faker", "GitHub Actions"],
         links: [{label: "Code", url: "https://github.com/Bibek-Dhakal/DataMart-Flex"}],
     },
     {
