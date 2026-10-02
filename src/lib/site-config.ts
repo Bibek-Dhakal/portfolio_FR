@@ -50,11 +50,12 @@ export const site = {
 export const stats = [
     {value: "0.94 → 0.64", label: "Precision@50 once whole clients were held out (FlyRank capstone)"},
     {value: "SHA-256", label: "Cryptographic hashing linking model artifacts to exact data versions (FlowTrace)"},
-    {value: ">90%", label: "Test coverage strictly enforced in CI for the TabTrace ML pipeline"},
+    {value: "2.24s", label: "To extract, clean, validate, and load 100k messy ETL records (DataCleanse-Lite)"},
     {value: "0", label: "Dropped requests during K8s rolling updates under load (ServeScale)"},
     {value: "0", label: "Boilerplate Python code required to serve a new model via ModelGate"},
     {value: "0.85", label: "5-fold CV ROC-AUC, churn model (logistic regression beat tree ensembles)"},
     {value: "PyPI", label: "LexiByte & ModelGate: Packaged from scratch and published publicly"},
+    {value: "5", label: "Slides automatically generated into an executive presentation from raw synthetic data via SQL & Python (InsightStory-EDA)"},
 ];
 
 /** Capability areas. Each claim must be backed by the evidence links. */
@@ -92,14 +93,14 @@ export const pillars: Pillar[] = [
             "FlowTrace: DAG-orchestrated pipeline using Prefect, Pandera quality gates, and MLflow lineage tracking.",
             "ServeScale: Scalable ML serving on Kubernetes with ONNX INT8 quantization and zero-downtime rollouts verified by Locust.",
             "ModelGate: Containerized FastAPI inference service and native Python SDK featuring dynamic URL model loading, strict JSON schema validation, and error shielding.",
-            "Churn pipeline: Pandera and Pydantic data contracts, MLflow experiment tracking, Skops serialization, Dockerized FastAPI service.",
-            "CI/CD with GitHub Actions, Pytest, Ruff, and Release Please across TabTrace, ModelGate, FlowTrace, and Churn projects."
+            "DataCleanse-Lite: High-throughput ETL pipeline utilizing Pandas and Pydantic, cleaning and loading 100k records into SQLite in 2.24s with quarantine gating.",
+            "CI/CD with GitHub Actions, Pytest, Ruff, and Release Please semantic versioning universally enforced across repositories."
         ],
         evidence: [
             {label: "FlowTrace repo", url: "https://github.com/Bibek-Dhakal/flowtrace"},
             {label: "ServeScale repo", url: "https://github.com/Bibek-Dhakal/servescale"},
             {label: "ModelGate repo", url: "https://github.com/Bibek-Dhakal/modelgate"},
-            {label: "Churn repo", url: "https://github.com/Bibek-Dhakal/customer-churn-risk-intelligence"},
+            {label: "DataCleanse-Lite", url: "https://github.com/Bibek-Dhakal/data-cleanse-lite"},
         ],
     },
     {
@@ -195,8 +196,8 @@ export const about = {
             ],
         },
         {
-            group: "Data",
-            items: ["DuckDB", "BigQuery", "PostgreSQL", "Redis"],
+            group: "Data & BI",
+            items: ["DuckDB", "BigQuery", "PostgreSQL", "SQLite", "Power BI", "Redis"],
         },
         {
             group: "Backend & MLOps",
@@ -209,6 +210,7 @@ export const about = {
                 "Prefect",
                 "Pandera / Pydantic",
                 "GitHub Actions",
+                "SQLAlchemy",
                 "WebSockets",
             ],
         },
@@ -353,6 +355,47 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+    {
+        slug: "execpulse-bi",
+        title: "ExecPulse-BI",
+        tagline: "Interactive Sales & Operations BI Dashboard built on automated Star-Schema Data Modeling.",
+        highlights: [
+            "Designed to tackle scattered data sources by pushing heavy row-level transformations into programmatic Python ETL steps rather than embedding them in BI visuals.",
+            "Transformed 50,000+ raw transactional logs into a strict dimensional Star Schema (Fact and Dimension tables) using Pandas.",
+            "Exported normalized data into a local SQLite database via SQLAlchemy and generated flat CSVs for flexible downstream analytics.",
+            "Built a ready-to-use Power BI dashboard (.pbix) featuring pre-calculated dynamic DAX/LOD measures (Total Revenue, YoY Growth, Rolling 30-Day Sales).",
+            "Maintained strict engineering standard via Ruff formatting, Pytest, pre-commit hooks, and semantic versioning through Release Please."
+        ],
+        stack: ["Python", "Pandas", "SQLite", "SQLAlchemy", "Power BI", "DAX", "GitHub Actions"],
+        links: [{label: "Code", url: "https://github.com/Bibek-Dhakal/exec-pulse-BI"}],
+    },
+    {
+        slug: "datacleanse-lite",
+        title: "DataCleanse-Lite",
+        tagline: "High-throughput ETL pipeline for multi-source e-commerce data with strict Pydantic validation.",
+        highlights: [
+            "Processed, cleaned, and validated 100,000 messy records in ~2.24 seconds using in-memory Pandas operations, beating the 30-second SLA by over 13x.",
+            "Enforced strict data integrity with Pydantic schemas, gracefully quarantining ~21% of corrupted records to flat files rather than silently dropping them.",
+            "Standardized disparate raw formats (CSV/JSON), imputed missing values, and loaded normalized data into a relational SQLite schema via SQLAlchemy.",
+            "Maintained strict engineering standards using pre-commit hooks, Ruff for formatting, Pytest for testing, and Release Please for automated semantic versioning."
+        ],
+        stack: ["Python", "Pandas", "Pydantic", "SQLite", "SQLAlchemy", "Pytest", "GitHub Actions"],
+        links: [{label: "Code", url: "https://github.com/Bibek-Dhakal/data-cleanse-lite"}],
+    },
+    {
+        slug: "insightstory-eda",
+        title: "InsightStory-EDA",
+        tagline: "SQL-driven exploratory analysis of e-commerce behavior, automated into a 5-slide executive deck.",
+        highlights: [
+            "Built a deterministic synthetic data generator using NumPy/Pandas to simulate realistic e-commerce transactions, product catalogs, and customer archetypes.",
+            "Engineered analytical SQL pipelines using DuckDB to compute RFM segments, cohort retention, margin leakage, and monthly churn trends.",
+            "Developed a full Python CLI (insightstory build-db -> analyze -> charts -> deck) to automate the end-to-end analytical workflow.",
+            "Programmatically generated a 5-slide executive presentation (.pptx and .pdf) complete with automated charts, metric-backed recommendations, and takeaway callouts.",
+            "Maintained strict engineering standards with comprehensive Pytest coverage, Ruff linting/formatting, and GitHub Actions CI/CD workflows."
+        ],
+        stack: ["Python", "DuckDB", "SQL", "Pandas", "Matplotlib", "python-pptx", "CLI"],
+        links: [{label: "Code", url: "https://github.com/Bibek-Dhakal/InsightStory-EDA"}],
+    },
     {
         slug: "flowtrace",
         title: "FlowTrace",
