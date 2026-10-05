@@ -54,18 +54,21 @@ export const stats = [
         value: "p < 0.01",
         label: "Threshold for automated Sample Ratio Mismatch (SRM) anomaly detection to halt invalid A/B tests (StatTest-Pro)"
     },
+    {
+        value: "100%",
+        label: "Idempotency guaranteed with zero silent data drops across Medallion layers using Spark & Delta Lake (LakeForge)"
+    },
+    {
+        value: "28.7%",
+        label: "Statistically significant relative conversion lift measured with strict 95% Confidence Intervals (InsightLedger)"
+    },
     {value: "SHA-256", label: "Cryptographic hashing linking model artifacts to exact data versions (FlowTrace)"},
     {
         value: "~174ms",
         label: "To process 1M+ transactional rows and compute complex rolling LTV & retention via DuckDB (CohortLTV-Engine)"
     },
-    {
-        value: "100k+",
-        label: "Synthetic transactions dynamically transformed into a centralized Star Schema using DuckDB (DataMart-Flex)"
-    },
     {value: "2.24s", label: "To extract, clean, validate, and load 100k messy ETL records (DataCleanse-Lite)"},
     {value: "0", label: "Dropped requests during K8s rolling updates under load (ServeScale)"},
-    {value: "0", label: "Boilerplate Python code required to serve a new model via ModelGate"},
     {value: "PyPI", label: "StatTest-Pro, LexiByte & ModelGate: Packaged from scratch and published publicly"},
     {
         value: "5",
@@ -87,18 +90,17 @@ export const pillars: Pillar[] = [
         summary:
             "Framing a problem, choosing an honest validation design, and comparing against simple baselines.",
         points: [
+            "InsightLedger: Rigorous A/B test analysis in Python ensuring SRM validation, robust p-values, and 95% CIs before rolling out features.",
             "StatTest-Pro: End-to-end A/B testing SDK published to PyPI that enforces statistical rigor by natively halting invalid tests on Sample Ratio Mismatch (SRM) anomalies.",
             "TabTrace: Reproducible pipeline that halts on data leakage, registers feature rationale in code, and evaluates via stratified cross-validation.",
             "FlyRank capstone: client-holdout split, baseline rule vs. Logistic Regression vs. Random Forest, and two deliberately planted leaks to test the validation.",
-            "Churn model: 5-fold stratified CV; logistic regression (0.8501 ROC-AUC) beat Random Forest and LightGBM.",
-            "Phishing detector: XGBoost with Platt-scaled probabilities and soft-voting fusion across two feature sources.",
-            "OverfitLab: Demonstrated the diagnosis of train/val divergence and corrected it with Dropout and Weight Decay on a PyTorch MLP."
+            "Churn model: 5-fold stratified CV; logistic regression (0.8501 ROC-AUC) beat Random Forest and LightGBM."
         ],
         evidence: [
-            {label: "StatTest-Pro repo", url: "https://github.com/Bibek-Dhakal/StatTest-Pro"},
-            {label: "TabTrace repo", url: "https://github.com/Bibek-Dhakal/tabtrace"},
+            {label: "InsightLedger", url: "https://github.com/Bibek-Dhakal/InsightLedger"},
+            {label: "StatTest-Pro", url: "https://github.com/Bibek-Dhakal/StatTest-Pro"},
+            {label: "TabTrace", url: "https://github.com/Bibek-Dhakal/tabtrace"},
             {label: "FlyRank paper", url: "https://bibek-dhakal.github.io/applied-search-intelligence/"},
-            {label: "Churn repo", url: "https://github.com/Bibek-Dhakal/customer-churn-risk-intelligence"},
         ],
     },
     {
@@ -106,21 +108,19 @@ export const pillars: Pillar[] = [
         summary:
             "Turning a model into something that runs, is validated at its edges, and can be released repeatably.",
         points: [
+            "LakeForge: 100% Dockerized Medallion lakehouse using Apache Spark, Delta Lake, Airflow, and a YAML-driven quarantine engine for bad data.",
             "FlowTrace: DAG-orchestrated pipeline using Prefect, Pandera quality gates, and MLflow lineage tracking.",
             "ServeScale: Scalable ML serving on Kubernetes with ONNX INT8 quantization and zero-downtime rollouts verified by Locust.",
             "ModelGate: Containerized FastAPI inference service and native Python SDK featuring dynamic URL model loading, strict JSON schema validation, and error shielding.",
             "DataMart-Flex: Enterprise ETL pipeline utilizing DuckDB and Python to transform 100k+ mock transactions into a Kimball Star Schema, visualized via explicit DAX measures in Power BI.",
-            "CohortLTV-Engine: Scheduled Python & DuckDB analytical pipeline computing complex SQL window functions across 1M+ rows in ~174ms with full audit logging.",
-            "DataCleanse-Lite: High-throughput ETL pipeline utilizing Pandas and Pydantic, cleaning and loading 100k records into SQLite in 2.24s with quarantine gating.",
-            "CI/CD with GitHub Actions, Pytest, Ruff, and Release Please semantic versioning universally enforced across repositories."
+            "CohortLTV-Engine: Scheduled Python & DuckDB analytical pipeline computing complex SQL window functions across 1M+ rows in ~174ms with full audit logging."
         ],
         evidence: [
-            {label: "FlowTrace repo", url: "https://github.com/Bibek-Dhakal/flowtrace"},
-            {label: "ServeScale repo", url: "https://github.com/Bibek-Dhakal/servescale"},
-            {label: "ModelGate repo", url: "https://github.com/Bibek-Dhakal/modelgate"},
-            {label: "DataMart-Flex repo", url: "https://github.com/Bibek-Dhakal/DataMart-Flex"},
-            {label: "CohortLTV-Engine", url: "https://github.com/Bibek-Dhakal/CohortLTVEngine"},
-            {label: "DataCleanse-Lite", url: "https://github.com/Bibek-Dhakal/data-cleanse-lite"},
+            {label: "LakeForge", url: "https://github.com/Bibek-Dhakal/LakeForge"},
+            {label: "FlowTrace", url: "https://github.com/Bibek-Dhakal/flowtrace"},
+            {label: "ServeScale", url: "https://github.com/Bibek-Dhakal/servescale"},
+            {label: "ModelGate", url: "https://github.com/Bibek-Dhakal/modelgate"},
+            {label: "DataMart-Flex", url: "https://github.com/Bibek-Dhakal/DataMart-Flex"},
         ],
     },
     {
@@ -219,7 +219,7 @@ export const about = {
         },
         {
             group: "Data & BI",
-            items: ["DuckDB", "BigQuery", "PostgreSQL", "SQLite", "Power BI", "Redis"],
+            items: ["Apache Spark", "Delta Lake", "DuckDB", "PostgreSQL", "Airflow", "dbt", "Metabase", "Power BI", "Redis"],
         },
         {
             group: "Backend & MLOps",
@@ -232,8 +232,7 @@ export const about = {
                 "Prefect",
                 "Pandera / Pydantic",
                 "GitHub Actions",
-                "SQLAlchemy",
-                "WebSockets",
+                "Prometheus",
             ],
         },
         {
@@ -377,6 +376,34 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+    {
+        slug: "lakeforge",
+        title: "LakeForge",
+        tagline: "Medallion lakehouse ETL/ELT with idempotent incremental processing, quality quarantine, and governed access.",
+        highlights: [
+            "Architected a Docker-first open-source lakehouse utilizing Apache Spark, Delta Lake, Airflow, and DuckDB to process data deterministically.",
+            "Built a declarative YAML quality engine that enforces strict schemas and quarantines bad rows without silent data drops.",
+            "Ensured absolute pipeline idempotency through Delta Lake MERGE operations and strict batch lineage tracking across layers.",
+            "Served Gold-layer tables securely through a FastAPI and DuckDB Analytics API protected by Role-Based Access Control (RBAC).",
+            "Integrated full-stack observability tracking pipeline SLOs via Prometheus metrics and Grafana dashboards."
+        ],
+        stack: ["Apache Spark", "Delta Lake", "Airflow", "DuckDB", "FastAPI", "Docker", "Prometheus", "Grafana"],
+        links: [{label: "Code", url: "https://github.com/Bibek-Dhakal/LakeForge"}],
+    },
+    {
+        slug: "insightledger",
+        title: "InsightLedger",
+        tagline: "End-to-end decision-support analytics stack with governed KPIs, reconciled data, and rigorous A/B testing.",
+        highlights: [
+            "Deployed a containerized modern data stack utilizing PostgreSQL, dbt-postgres, and Metabase for self-serve BI.",
+            "Engineered governed data models with automated dbt data-quality tests (uniqueness, non-null) to guarantee reporting reconciliation.",
+            "Executed statistically sound A/B experiment analysis using scipy and statsmodels, natively preventing false positives via strict Sample Ratio Mismatch (SRM) checks.",
+            "Calculated precise business impacts including 2-proportion Z-test p-values, relative conversion lifts, and 95% Confidence Intervals.",
+            "Automated CI/CD workflows using GitHub Actions to enforce Pytest application testing, Ruff linting, and semantic versioning."
+        ],
+        stack: ["PostgreSQL", "dbt", "Metabase", "Python", "SciPy", "Statsmodels", "Docker"],
+        links: [{label: "Code", url: "https://github.com/Bibek-Dhakal/InsightLedger"}],
+    },
     {
         slug: "stattest-pro",
         title: "StatTest-Pro",
